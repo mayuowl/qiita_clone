@@ -1,0 +1,23 @@
+# 自動生成するものを除外
+AllCops:
+  Exclude:
+    - "db/schema.rb"
+    - "vendor/**/*"
+    - "node_modules/**/*"
+
+# 文字制限
+Metrics/LineLength:
+  Max: 160
+
+# 「includeは文頭に書く」を除外
+Style/MixinUsage:
+  Exclude:
+    - 'bin/**/*'
+
+# ドキュメント用のコメントを不要とする
+Style/Documentation:
+  Enabled: false
+
+# ダブルクオートをデフォルトにする
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
