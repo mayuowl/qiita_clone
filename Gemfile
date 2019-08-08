@@ -7,8 +7,7 @@ ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+gem 'mysql2'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -45,10 +44,9 @@ gem 'devise_token_auth'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'pry-rails'
   gem 'pry-byebug'
   gem 'pry-doc'
-  gem 'pry-rails'
-  gem 'rubocop-rails'
 end
 
 group :development do
@@ -59,6 +57,8 @@ group :development do
   gem 'annotate'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'annotate'
+  gem 'rubocop-rails'
 end
 
 group :test do
