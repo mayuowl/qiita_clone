@@ -43,7 +43,6 @@ gem 'devise_token_auth'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'rubocop-rails'
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'pry-doc'
@@ -57,6 +56,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'annotate'
+  gem 'rubocop-rails'
 end
 
 group :test do
