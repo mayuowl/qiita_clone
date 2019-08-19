@@ -52,7 +52,6 @@ ActiveRecord::Schema.define(version: 2019_08_19_064944) do
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
     t.string "account"
-    t.string "password"
     t.string "email"
     t.text "tokens"
     t.datetime "created_at", null: false
