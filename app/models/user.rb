@@ -8,4 +8,6 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :articles
+  has_many :article_likes
+  has_many :comments
 end
