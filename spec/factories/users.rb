@@ -23,15 +23,10 @@
 #  updated_at             :datetime         not null
 #
 
-class User < ApplicationRecord
-  extend Devise::Models
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-  include DeviseTokenAuth::Concerns::User
-
-  has_many :articles, dependent: :destroy
-  has_many :article_likes, dependent: :destroy
-  has_many :comments, dependent: :destroy
+FactoryBot.define do
+  factory :user do
+    sequence(:account) { |n| "#{n}_#{Faker::Internet.username}" }
+    sequence(:email) { |n| "#{n}_#{Faker::Internet.email}" }
+    password { Faker::Internet.password }
+  end
 end

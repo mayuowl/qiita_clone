@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: articles
@@ -12,7 +14,8 @@
 
 FactoryBot.define do
   factory :article do
-    title { "MyString" }
-    body { "MyText" }
+    title { Faker::Book.title }
+    body { Faker::TvShows::Friends.quote }
+    user
   end
 end
