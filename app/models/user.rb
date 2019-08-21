@@ -17,7 +17,6 @@
 #  confirmation_sent_at   :datetime
 #  unconfirmed_email      :string(255)
 #  account                :string(255)
-#  password               :string(255)
 #  email                  :string(255)
 #  tokens                 :text(65535)
 #  created_at             :datetime         not null
