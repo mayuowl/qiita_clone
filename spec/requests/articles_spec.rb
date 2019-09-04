@@ -47,19 +47,18 @@ RSpec.describe "Articles", type: :request do
 
     it "記事のタイトルと本文のみが正しく更新される" do
       expect { subject }.to change { Article.find(article.id).title }.from(article.title).to(params[:article][:title]) &
-                        not_change { Article.find(article.id).body } &
-                        not_change { Article.find(article.id).created_at }
+                            not_change { Article.find(article.id).body } &
+                            not_change { Article.find(article.id).created_at }
       expect(response).to have_http_status(204)
     end
   end
 
   describe "DELETE /articles/:id" do
     subject { delete(article_path(article.id)) }
-    let!(:article){ create(:article) }
+    let!(:article) { create(:article) }
     it "任意の記事が削除出来ている" do
       expect { subject }.to change { Article.count }.by(-1)
       expect(response).to have_http_status(204)
     end
   end
-
 end

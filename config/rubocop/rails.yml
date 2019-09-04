@@ -4,6 +4,7 @@ AllCops:
     - "db/schema.rb"
     - "vendor/**/*"
     - "node_modules/**/*"
+    - "db/migrate/*.rb"
 
 # 文字制限
 Metrics/LineLength:
@@ -21,3 +22,8 @@ Style/Documentation:
 # ダブルクオートをデフォルトにする
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+
+# RSpecの行数を制限しない
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
