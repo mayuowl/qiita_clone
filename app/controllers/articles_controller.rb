@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 class ArticlesController < ApplicationController
-  before_action :set_user, only: %i[show update destroy]
+  before_action :set_article, only: %i[update destroy]
 
   def index
     @articles = Article.all
   end
 
-  def show; end
+  def show
+    @article = Article.find(params[:id])
+  end
 
   def update
     @article.update!(article_params)
@@ -23,7 +25,7 @@ class ArticlesController < ApplicationController
     params.require(:article).permit(:title, :body)
   end
 
-  def set_user
-    @article = Article.find(params[:id])
+  def set_article
+    @article = current_user.articles.find(params[:id])
   end
 end

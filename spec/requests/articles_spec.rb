@@ -42,23 +42,51 @@ RSpec.describe "Articles", type: :request do
 
   describe "PATCH /articles/:id" do
     subject { patch(article_path(article.id, params: params)) }
-    let(:params) { { article: { title: Faker::Book.title, created_at: Time.current } } }
-    let(:article) { create(:article) }
+    let(:params) { { article: { title: Faker::Book.title, body: Faker::TvShows::Friends.quote, created_at: Time.current } } }
+    # FIXME: devise_token_auth の導入が完了次第修正すること
+    let(:current_user) { create(:user) }
+    before { allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user) }
+    context "自分の記事を更新する時" do
+      let!(:article) { create(:article, user: current_user) }
 
-    it "記事のタイトルと本文のみが正しく更新される" do
-      expect { subject }.to change { Article.find(article.id).title }.from(article.title).to(params[:article][:title]) &
-                            not_change { Article.find(article.id).body } &
-                            not_change { Article.find(article.id).created_at }
-      expect(response).to have_http_status(204)
+      it "自分の記事のタイトルと本文のみが正しく更新される" do
+        expect { subject }.to change { Article.find(article.id).title }.from(article.title).to(params[:article][:title]) &
+                              change { Article.find(article.id).body }.from(article.body).to(params[:article][:body]) &
+                              not_change { Article.find(article.id).created_at }
+        expect(response).to have_http_status(204)
+      end
+    end
+    context "他人の記事を更新する時" do
+      let(:other_user) { create(:user) }
+      let!(:article) { create(:article, user: other_user) }
+      it "更新出来ない（見つからない）" do
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound) &
+                              change { Article.count }.by(0)
+      end
     end
   end
 
   describe "DELETE /articles/:id" do
     subject { delete(article_path(article.id)) }
-    let!(:article) { create(:article) }
-    it "任意の記事が削除出来ている" do
-      expect { subject }.to change { Article.count }.by(-1)
-      expect(response).to have_http_status(204)
+    let(:current_user) { create(:user) }
+    before { allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user) }
+
+    context "自分の記事を削除する時" do
+      let!(:article) { create(:article, user: current_user) }
+
+      it "任意の記事が削除出来ている" do
+        expect { subject }.to change { Article.count }.by(-1)
+        expect(response).to have_http_status(204)
+      end
+    end
+    context "他人の記事を削除する時" do
+      let(:other_user) { create(:user) }
+      let!(:article) { create(:article, user: other_user) }
+
+      it "削除出来ない（見つからない）" do
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound) &
+                              change { Article.count }.by(0)
+      end
     end
   end
 end
