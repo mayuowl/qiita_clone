@@ -19,6 +19,10 @@ Style/MixinUsage:
 Style/Documentation:
   Enabled: false
 
+# 日本語のコメントを制限しない
+Style/AsciiComments:
+  Enabled: false
+
 # ダブルクオートをデフォルトにする
 Style/StringLiterals:
   EnforcedStyle: double_quotes
