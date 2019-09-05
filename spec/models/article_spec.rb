@@ -15,5 +15,22 @@
 require "rails_helper"
 
 RSpec.describe Article, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "タイトルと本文が入力されている時" do
+    it "登録出来る" do
+      article = create(:article)
+      expect(article).to be_valid
+    end
+  end
+  context "タイトルが入力されていない時" do
+    it "登録出来ない" do
+      article = build(:article, title: nil)
+      expect(article.valid?).to be false
+    end
+  end
+  context "本文が入力されていない時" do
+    it "登録出来ない" do
+      article = build(:article, body: nil)
+      expect(article.valid?).to be false
+    end
+  end
 end
