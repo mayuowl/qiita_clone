@@ -1,12 +1,12 @@
 import Vue from 'vue/dist/vue.esm.js'
 import VueRouter from 'vue-router'
-import UserList from '../components/ArticleList.vue'
+import ArticleList from '../components/ArticleList.vue'
 
 Vue.use(VueRouter)
 
 export default new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/', component: UserList },
+    { path: '/', component: ArticleList },
   ],
 })
