@@ -4,7 +4,8 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: %i[update destroy]
 
   def index
-    @articles = Article.all
+    articles = Article.all
+    render json: articles
   end
 
   def show
