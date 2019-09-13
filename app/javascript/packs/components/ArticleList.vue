@@ -25,8 +25,6 @@
       <li v-for="article in articles" v-bind:key="article.id">
         <div>{{article.title}}</div>
         <div>{{article.body}}</div>
-        <div>{{article.updated_at}}</div>
-        <div>{{article.user_id}}</div>
       </li>
     </ul>
   </div>

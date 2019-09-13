@@ -31,7 +31,3 @@ Style/StringLiterals:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
-
-# 空メソッドの場合、1行で書かなくても良い
-Style/EmptyMethod:
-  EnforcedStyle: expanded

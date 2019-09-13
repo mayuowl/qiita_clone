@@ -9,18 +9,15 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    article = Article.find(params[:id])
-    render json: article
+    @article = Article.find(params[:id])
   end
 
   def create
-    article = current_user.articles.create!(article_params)
-    render json: article
+    @article = current_user.articles.create!(article_params)
   end
 
   def update
     @article.update!(article_params)
-    render json: @article
   end
 
   def destroy
