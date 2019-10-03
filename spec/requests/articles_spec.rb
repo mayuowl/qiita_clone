@@ -41,7 +41,7 @@ RSpec.describe "Articles", type: :request do
   end
 
   describe "POST /articles" do
-    subject { post(articles_path(params: params, headers: headers)) }
+    subject { post(articles_path, params: params, headers: headers) }
 
     let(:current_user) { create(:user) }
     let(:params) { { article: attributes_for(:article) } }
@@ -49,12 +49,12 @@ RSpec.describe "Articles", type: :request do
 
     it "記事が作成出来る" do
       expect { subject }.to change { Article.count }.by(1)
-      expect(response).to have_http_status(204)
+      expect(response).to have_http_status(200)
     end
   end
 
   describe "PATCH /articles/:id" do
-    subject { patch(article_path(article.id, params: params, headers: headers)) }
+    subject { patch(article_path(article.id), params: params, headers: headers) }
 
     let(:current_user) { create(:user) }
     let(:params) { { article: attributes_for(:article) } }
@@ -67,7 +67,7 @@ RSpec.describe "Articles", type: :request do
         expect { subject }.to change { Article.find(article.id).title }.from(article.title).to(params[:article][:title]) &
                               change { Article.find(article.id).body }.from(article.body).to(params[:article][:body]) &
                               not_change { Article.find(article.id).created_at }
-        expect(response).to have_http_status(204)
+        expect(response).to have_http_status(200)
       end
     end
     context "他人の記事を更新する時" do
