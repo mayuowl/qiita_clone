@@ -13,7 +13,7 @@ RSpec.describe "Articles", type: :request do
       subject
       res = JSON.parse(response.body)
       expect(res.length).to eq 3
-      expect(res[0].keys).to eq %w[title body user_id]
+      expect(res[0].keys).to eq ["id", "title", "body", "updated_at", "user_id", "user"]
       expect(response).to have_http_status(200)
     end
   end
@@ -41,11 +41,11 @@ RSpec.describe "Articles", type: :request do
   end
 
   describe "POST /articles" do
-    subject { post(articles_path(params: params)) }
-    let(:params) { { article: attributes_for(:article) } }
-    # FIXME: devise_token_auth の導入が完了次第修正すること
+    subject { post(articles_path(params: params, headers: headers)) }
+
     let(:current_user) { create(:user) }
-    before { allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user) }
+    let(:params) { { article: attributes_for(:article) } }
+    let(:headers) { authentication_headers_for(current_user) }
 
     it "記事が作成出来る" do
       expect { subject }.to change { Article.count }.by(1)
@@ -54,11 +54,12 @@ RSpec.describe "Articles", type: :request do
   end
 
   describe "PATCH /articles/:id" do
-    subject { patch(article_path(article.id, params: params)) }
-    let(:params) { { article: { title: Faker::Book.title, body: Faker::TvShows::Friends.quote, created_at: Time.current } } }
-    # FIXME: devise_token_auth の導入が完了次第修正すること
+    subject { patch(article_path(article.id, params: params, headers: headers)) }
+
     let(:current_user) { create(:user) }
-    before { allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user) }
+    let(:params) { { article: attributes_for(:article) } }
+    let(:headers) { authentication_headers_for(current_user) }
+
     context "自分の記事を更新する時" do
       let!(:article) { create(:article, user: current_user) }
 
@@ -72,6 +73,7 @@ RSpec.describe "Articles", type: :request do
     context "他人の記事を更新する時" do
       let(:other_user) { create(:user) }
       let!(:article) { create(:article, user: other_user) }
+
       it "更新出来ない（見つからない）" do
         expect { subject }.to raise_error(ActiveRecord::RecordNotFound) &
                               change { Article.count }.by(0)
@@ -80,9 +82,11 @@ RSpec.describe "Articles", type: :request do
   end
 
   describe "DELETE /articles/:id" do
-    subject { delete(article_path(article.id)) }
+    subject { delete(article_path(article.id), headers: headers) }
+
     let(:current_user) { create(:user) }
-    before { allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user) }
+    let(:headers) { authentication_headers_for(current_user) }
+    let(:article_id) { article.id }
 
     context "自分の記事を削除する時" do
       let!(:article) { create(:article, user: current_user) }
