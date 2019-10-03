@@ -35,3 +35,7 @@ Metrics/BlockLength:
 # 空メソッドの場合、1行で書かなくても良い
 Style/EmptyMethod:
   EnforcedStyle: expanded
+
+# Use nested module/class definitions instead of compact style. を無視
+Style/ClassAndModuleChildren:
+  Enabled: false
