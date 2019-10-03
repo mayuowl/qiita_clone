@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ArticlesController < ApplicationController
+  before_action :authenticate_api_user!, only: %i[create update destroy]
   before_action :set_article, only: %i[update destroy]
 
   def index
@@ -14,7 +15,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    article = current_user.articles.create!(article_params)
+    article = current_api_user.articles.create!(article_params)
     render json: article
   end
 
@@ -34,6 +35,6 @@ class ArticlesController < ApplicationController
   end
 
   def set_article
-    @article = current_user.articles.find(params[:id])
+    @article = current_api_user.articles.find(params[:id])
   end
 end
