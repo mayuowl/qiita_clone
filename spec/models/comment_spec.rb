@@ -15,5 +15,21 @@
 require "rails_helper"
 
 RSpec.describe Comment, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "正常系" do
+    context "本文が入力されている時" do
+      it "コメントを投稿出来る" do
+        comment = create(:comment)
+        expect(comment).to be_valid
+      end
+    end
+  end
+  describe "異常系" do
+    context "本文が入力されていない時" do
+      it "コメントを投稿出来ない" do
+        article = create(:article)
+        comment = Comment.create(article_id: article.id, body: nil)
+        expect(comment.valid?).to be false
+      end
+    end
+  end
 end
