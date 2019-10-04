@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Articles", type: :request do
   describe "GET /articles" do
-    subject { get(articles_path) }
+    subject { get(api_v1_articles_path) }
     before do
       create_list(:article, 3)
     end
@@ -19,7 +19,7 @@ RSpec.describe "Articles", type: :request do
   end
 
   describe "GET /articles/:id" do
-    subject { get(article_path(article_id)) }
+    subject { get(api_v1_article_path(article_id)) }
     context "存在する記事の詳細を指定した時" do
       let(:article) { create(:article) }
       let(:article_id) { article.id }
@@ -41,7 +41,7 @@ RSpec.describe "Articles", type: :request do
   end
 
   describe "POST /articles" do
-    subject { post(articles_path, params: params, headers: headers) }
+    subject { post(api_v1_articles_path, params: params, headers: headers) }
 
     let(:current_user) { create(:user) }
     let(:params) { { article: attributes_for(:article) } }
@@ -54,7 +54,7 @@ RSpec.describe "Articles", type: :request do
   end
 
   describe "PATCH /articles/:id" do
-    subject { patch(article_path(article.id), params: params, headers: headers) }
+    subject { patch(api_v1_article_path(article.id), params: params, headers: headers) }
 
     let(:current_user) { create(:user) }
     let(:params) { { article: attributes_for(:article) } }
@@ -82,7 +82,7 @@ RSpec.describe "Articles", type: :request do
   end
 
   describe "DELETE /articles/:id" do
-    subject { delete(article_path(article.id), headers: headers) }
+    subject { delete(api_v1_article_path(article.id), headers: headers) }
 
     let(:current_user) { create(:user) }
     let(:headers) { authentication_headers_for(current_user) }
