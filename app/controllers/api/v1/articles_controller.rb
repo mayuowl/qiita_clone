@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::ArticlesController < ApplicationController
+class Api::V1::ArticlesController < Api::V1::ApiController
   before_action :authenticate_api_v1_user!, only: %i[create update destroy]
   before_action :set_article, only: %i[update destroy]
 
