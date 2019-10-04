@@ -9,6 +9,7 @@
 #  article_id :bigint
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  body       :text(65535)
 #
 
 FactoryBot.define do
