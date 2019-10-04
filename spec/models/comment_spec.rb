@@ -26,7 +26,7 @@ RSpec.describe Comment, type: :model do
   describe "異常系" do
     context "本文が入力されていない時" do
       let(:article) { build(:article) }
-      let(:comment) { build(:comment, article_id: article.id, body: nil) }
+      let(:comment) { build(:comment, article: article, body: nil) }
       it "コメントを投稿出来ない" do
         expect(comment.valid?).to be false
       end
