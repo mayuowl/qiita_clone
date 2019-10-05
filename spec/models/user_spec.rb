@@ -23,18 +23,16 @@ RSpec.describe User, type: :model do
       end
     end
     context "すでに登録済みのアカウントが入力された時" do
+      before { create(:user, account: "user") }
       let(:user) { build(:user, account: "user") }
       it "ユーザー登録出来ない" do
-        registered_user = create(:user, account: "user")
-        binding.pry
         expect(user.valid?).to be false
       end
     end
     context "すでに登録済みのメールアドレスが入力された時" do
+      before { create(:user, email: "user@j.com") }
       let(:user) { build(:user, email: "user@j.com") }
       it "ユーザー登録出来ない" do
-        registered_user = create(:user, email: "user@j.com")
-        binding.pry
         expect(user.valid?).to be false
       end
     end
