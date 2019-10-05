@@ -36,10 +36,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   include DeviseTokenAuth::Concerns::User
 
-  with_options presence: true do
-    validates :account
-    validates :email
-  end
+  validates :account, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true
 
   has_many :articles, dependent: :destroy
   has_many :article_likes, dependent: :destroy
