@@ -10,9 +10,31 @@ RSpec.describe User, type: :model do
     end
   end
   describe "異常系" do
-    context "アカウントとメールアドレスが入力されていない時" do
-      let(:user) { build(:user, account: nil, email: nil) }
+    context "アカウントが入力されていない時" do
+      let(:user) { build(:user, account: nil) }
       it "ユーザー登録出来ない" do
+        expect(user.valid?).to be false
+      end
+    end
+    context "メールアドレスが入力されていない時" do
+      let(:user) { build(:user, email: nil) }
+      it "ユーザー登録出来ない" do
+        expect(user.valid?).to be false
+      end
+    end
+    context "すでに登録済みのアカウントが入力された時" do
+      let(:user) { build(:user, account: "user") }
+      it "ユーザー登録出来ない" do
+        registered_user = create(:user, account: "user")
+        binding.pry
+        expect(user.valid?).to be false
+      end
+    end
+    context "すでに登録済みのメールアドレスが入力された時" do
+      let(:user) { build(:user, email: "user@j.com") }
+      it "ユーザー登録出来ない" do
+        registered_user = create(:user, email: "user@j.com")
+        binding.pry
         expect(user.valid?).to be false
       end
     end
