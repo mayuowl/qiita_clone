@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Api::V1::Auth::Registrations", type: :request do
   describe "POST /api/v1/auth" do
-    subject { post(api_user_registration_path, params: params) }
+    subject { post(api_v1_user_registration_path, params: params) }
     context "必要な情報が正しく送信された時" do
       let!(:user) { create(:user) }
       let(:params) { attributes_for(:user) }
@@ -34,7 +34,7 @@ RSpec.describe "Api::V1::Auth::Registrations", type: :request do
   end
 
   describe "POST /api/v1/auth/sign_in" do
-    subject { post(api_user_session_path, params: params) }
+    subject { post(api_v1_user_session_path, params: params) }
     context "登録済みユーザーデータが正しく送信された時" do
       let!(:user) { create(:user) }
       let(:params) { { email: user.email, password: user.password } }
