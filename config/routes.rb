@@ -5,13 +5,14 @@ Rails.application.routes.draw do
 
   # reload 対策
   get "sign_up", to: "homes#index"
+  get "sign_in", to: "homes#index"
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       mount_devise_token_auth_for "User", at: "auth", controllers: {
         registrations: "api/v1/auth/registrations"
       }
-      resources :articles, defaults: { format: :json }
+      resources :articles
     end
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
