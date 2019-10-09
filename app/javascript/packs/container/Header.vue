@@ -3,14 +3,13 @@
     <router-link to="/" class="header-link">
       <v-toolbar-title class="white--text">Qiita</v-toolbar-title>
     </router-link>
-
     <!-- <v-btn icon>
       <v-icon>search</v-icon>
     </v-btn>-->
 
     <v-spacer></v-spacer>
 
-    <router-link to="/" class="header-link">
+    <router-link to="/sign_up" class="header-link">
       <v-btn flat class="register">ユーザー登録</v-btn>
     </router-link>
     <router-link to="/" class="header-link">
