@@ -1,9 +1,9 @@
 <template>
-  <v-app>
-  <v-app-bar dark color="#55c500">
+  <v-toolbar dark color="#55c500">
     <router-link to="/" class="header-link">
       <v-toolbar-title class="white--text font-weight-bold">Qiita</v-toolbar-title>
     </router-link>
+
     <!-- <v-btn icon>
       <v-icon>search</v-icon>
     </v-btn>-->
@@ -12,27 +12,25 @@
 
     <div v-if="isLoggedIn">
       <router-link to="/articles/new" class="header-link">
-        <v-btn text class="post font-weight-bold">投稿する</v-btn>
+        <v-btn flat class="post font-weight-bold">投稿する</v-btn>
       </router-link>
-      <v-btn text @click="logout" class="white--text font-weight-bold">ログアウト</v-btn>
+      <v-btn flat @click="logout" class="white--text font-weight-bold">ログアウト</v-btn>
     </div>
     <div v-else>
       <router-link to="/sign_up" class="header-link">
-        <v-btn text class="register font-weight-bold">ユーザー登録</v-btn>
+        <v-btn flat class="register font-weight-bold">ユーザー登録</v-btn>
       </router-link>
       <router-link to="/sign_in" class="header-link">
-        <v-btn text class="font-weight-bold">ログイン</v-btn>
+        <v-btn flat class="font-weight-bold">ログイン</v-btn>
       </router-link>
     </div>
-  </v-app-bar>
-  </v-app>
+  </v-toolbar>
 </template>
 
 <script lang="ts">
 import axios from "axios";
 import { Vue, Component } from "vue-property-decorator";
 import Router from "../router/router";
-
 const headers = {
   headers: {
     Authorization: "Bearer",
@@ -42,11 +40,9 @@ const headers = {
     uid: localStorage.getItem("uid")
   }
 };
-
 @Component
 export default class Header extends Vue {
   isLoggedIn: boolean = !!localStorage.getItem("access-token");
-
   async logout(): Promise<void> {
     await axios
       .delete("/api/v1/auth/sign_out", headers)
@@ -56,13 +52,11 @@ export default class Header extends Vue {
       .catch(e => {
         // TODO: 適切な Error 表示
         alert(e.response.data.errors);
-
         // localStorage は残っているが、
         // ログアウトはしてしまっている状態なのですべてリセットする
         this.refresh();
       });
   }
-
   private refresh(): void {
     localStorage.clear();
     Router.push("/");
@@ -72,18 +66,15 @@ export default class Header extends Vue {
 }
 </script>
 
-
 <style lang="scss" scoped>
 .header-link {
   text-decoration: none;
 }
-
 .register,
 .post {
   border: 2px solid #fff;
   border-radius: 5px;
 }
-
 .login {
   font-weight: bold;
 }
