@@ -66,6 +66,7 @@ export default class RegisterContainer extends Vue {
         localStorage.setItem("access-token", response.headers["access-token"]);
         localStorage.setItem("uid", response.headers["uid"]);
         localStorage.setItem("client", response.headers["client"]);
+
         Router.push("/");
 
         // TODO: Vuex でログイン状態を管理するようになったら消す

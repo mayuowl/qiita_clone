@@ -44,6 +44,7 @@ Vue.use(VeeValidate, { locale: "ja" });
 
 @Component
 export default class RegisterContainer extends Vue {
+  [x: string]: any;
   $_veeValidate: {
     validator: "new";
   };
@@ -67,10 +68,11 @@ export default class RegisterContainer extends Vue {
   mounted() {
     this.$validator.localize("ja", this.dictionary);
   }
+
   async submit(): Promise<void> {
     // this.$validator.validateAll();
 
-      const params = {
+    const params = {
       name: this.name,
       email: this.email,
       password: this.password
@@ -82,6 +84,7 @@ export default class RegisterContainer extends Vue {
         localStorage.setItem("access-token", response.headers["access-token"]);
         localStorage.setItem("uid", response.headers["uid"]);
         localStorage.setItem("client", response.headers["client"]);
+
         Router.push("/");
 
         // TODO: Vuex でログイン状態を管理するようになったら消す
