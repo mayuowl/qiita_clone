@@ -1,9 +1,17 @@
-import Vue from 'vue/dist/vue.esm'
-import Router from './router/router'
+import Vue from "vue";
+import Router from "./router/router";
+import Header from "./container/Header.vue";
+import Vuetify from "vuetify";
+import "vuetify/dist/vuetify.min.css";
 
-document.addEventListener('turbolinks:load', () => {
+Vue.use(Vuetify);
+
+document.addEventListener("turbolinks:load", () => {
   new Vue({
-    el: '#app',
+    el: "#app",
     router: Router,
-  })
-})
+    components: {
+      navbar: Header
+    }
+  });
+});
