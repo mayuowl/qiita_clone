@@ -8,8 +8,19 @@
           </v-list-tile-avatar>
 
           <v-list-tile-content>
-            <v-list-tile-title>{{ article.title }}</v-list-tile-title>
-            <v-list-tile-sub-title>by {{ article.user.account }} {{ article.updated_at }}</v-list-tile-sub-title>
+            <v-list-tile-title class="article-title">
+              <router-link :to="{ name: 'article', params: { id: article.id }}">{{ article.title }}</router-link>
+            </v-list-tile-title>
+            <v-list-tile-sub-title>
+              by {{ article.user }}
+              <time-ago
+                :refresh="60"
+                :datetime="article.updated_at"
+                locale="en"
+                tooltip="right"
+                long
+              ></time-ago>
+            </v-list-tile-sub-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-divider :key="index"></v-divider>
@@ -21,8 +32,13 @@
 <script lang="ts">
 import axios from "axios";
 import { Vue, Component } from "vue-property-decorator";
+import TimeAgo from "vue2-timeago";
 
-@Component
+@Component({
+  components: {
+    TimeAgo
+  }
+})
 export default class ArticlesContainer extends Vue {
   articles: string[] = [];
 
@@ -43,5 +59,18 @@ export default class ArticlesContainer extends Vue {
 <style lang="scss" scoped>
 .articles-container {
   margin-top: 2em;
+  .article-title {
+    a {
+      color: #000;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    a:visited {
+      color: #777;
+    }
+  }
 }
 </style>
