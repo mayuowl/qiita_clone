@@ -1,7 +1,7 @@
 <template>
   <v-container v-model="article" class="item elevation-3 article-container">
     <v-layout xs-12 class="top-info-container">
-      <span class="user-name">@{{ article.user.account }}</span>
+      <span class="user-name" v-if="article">@{{ article.user.account }}</span>
       <time-ago :refresh="60" :datetime="article.updated_at" locale="en" tooltip="top" long></time-ago>
     </v-layout>
     <v-layout>

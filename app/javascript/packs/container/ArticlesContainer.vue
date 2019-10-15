@@ -8,11 +8,11 @@
           </v-list-tile-avatar>
 
           <v-list-tile-content>
-            <v-list-tile-title class="article-title">
+            <v-list-tile-title class="article-title" v-if="article">
               <router-link :to="{ name: 'article', params: { id: article.id }}">{{ article.title }}</router-link>
             </v-list-tile-title>
             <v-list-tile-sub-title>
-              by {{ article.user }}
+              by {{ article.user.account }}
               <time-ago
                 :refresh="60"
                 :datetime="article.updated_at"
