@@ -25,14 +25,12 @@ RSpec.describe Article, type: :model do
     context "下書き記事を作成する時" do
       it "作成できる" do
         article = create(:article, status: "draft")
-        binding.pry
         expect(article).to be_valid
       end
     end
     context "公開記事を作成する時" do
       it "作成できる" do
         article = create(:article, status: "publish")
-        binding.pry
         expect(article).to be_valid
       end
     end
