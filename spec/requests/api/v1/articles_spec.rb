@@ -22,10 +22,12 @@ RSpec.describe "Articles", type: :request do
     end
 
     context "下書きの記事がある時" do
-      let!(:article) { create(:article, status: "draft") }
+      let(:article) { create(:article, status: "draft") }
 
-      it "記事一覧を取得できない" do
-        expect { subject }.to raise_error ActiveRecord::RecordNotFound
+      it "下書きの一覧は、取得できない" do
+        subject
+        res = JSON.parse(response.body)
+        expect(res).to be_empty
       end
     end
   end
