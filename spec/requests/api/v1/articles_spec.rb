@@ -6,25 +6,36 @@ RSpec.describe "Articles", type: :request do
   describe "GET /articles" do
     subject { get(api_v1_articles_path) }
 
-    let!(:article1) { create(:article, updated_at: 1.day.ago) }
-    let!(:article2) { create(:article, updated_at: 2.days.ago) }
-    let!(:article3) { create(:article) }
+    context "公開済みの記事がある時" do
+      let!(:article1) { create(:article, updated_at: 1.day.ago, status: "publish") }
+      let!(:article2) { create(:article, updated_at: 2.days.ago, status: "publish") }
+      let!(:article3) { create(:article, status: "publish") }
 
-    it "記事一覧を全て取得できる(更新順)" do
-      subject
-      res = JSON.parse(response.body)
-      expect(res.length).to eq 3
-      expect(res[0].keys).to eq %w[id title updated_at user]
-      expect(res.map { |d| d["id"] }).to eq [article3.id, article1.id, article2.id]
-      expect(response).to have_http_status(200)
+      it "一覧を全て取得できる(更新順)" do
+        subject
+        res = JSON.parse(response.body)
+        expect(res.length).to eq 3
+        expect(res[0].keys).to eq %w[id title updated_at status user]
+        expect(res.map { |d| d["id"] }).to eq [article3.id, article1.id, article2.id]
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context "下書きの記事がある時" do
+      let!(:article) { create(:article, status: "draft") }
+
+      it "記事一覧を取得できない" do
+        expect { subject }.to raise_error ActiveRecord::RecordNotFound
+      end
     end
   end
 
   describe "GET /articles/:id" do
     subject { get(api_v1_article_path(article_id)) }
-    context "存在する記事の詳細を指定した時" do
-      let(:article) { create(:article) }
+    context "公開済みで、存在する記事の詳細を指定した時" do
+      let(:article) { create(:article, status: "publish") }
       let(:article_id) { article.id }
+
       it "記事が表示される" do
         subject
         res = JSON.parse(response.body)
@@ -36,6 +47,15 @@ RSpec.describe "Articles", type: :request do
     end
     context "存在しない記事の詳細を指定した時" do
       let(:article_id) { 10_000 }
+
+      it "記事が表示されない" do
+        expect { subject }.to raise_error ActiveRecord::RecordNotFound
+      end
+    end
+    context "下書きの記事の詳細を指定した時" do
+      let(:article) { create(:article, status: "draft") }
+      let(:article_id) { article.id }
+
       it "記事が表示されない" do
         expect { subject }.to raise_error ActiveRecord::RecordNotFound
       end
