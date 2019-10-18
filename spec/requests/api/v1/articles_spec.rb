@@ -7,9 +7,9 @@ RSpec.describe "Articles", type: :request do
     subject { get(api_v1_articles_path) }
 
     context "公開済みの記事がある時" do
-      let!(:article1) { create(:article, updated_at: 1.day.ago) }
-      let!(:article2) { create(:article, updated_at: 2.days.ago) }
-      let!(:article3) { create(:article) }
+      let!(:article1) { create(:article, :publish_status, updated_at: 1.day.ago) }
+      let!(:article2) { create(:article, :publish_status, updated_at: 2.days.ago) }
+      let!(:article3) { create(:article, :publish_status) }
       let!(:article4) { create(:article, :draft_status) }
 
       it "公開済みの一覧のみ取得できる(更新順)" do
@@ -26,7 +26,7 @@ RSpec.describe "Articles", type: :request do
   describe "GET /articles/:id" do
     subject { get(api_v1_article_path(article_id)) }
     context "公開済みで、存在する記事の詳細を指定した時" do
-      let(:article) { create(:article) }
+      let(:article) { create(:article, :publish_status) }
       let(:article_id) { article.id }
 
       it "記事が表示される" do
