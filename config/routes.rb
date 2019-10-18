@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-
   root "homes#index"
 
   # reload 対策
@@ -16,7 +15,7 @@ Rails.application.routes.draw do
         registrations: "api/v1/auth/registrations"
       }
       namespace :articles do
-        resources :drafts, only: [:index, :show]
+        resources :drafts, only: %i[index show]
       end
       resources :articles
     end
