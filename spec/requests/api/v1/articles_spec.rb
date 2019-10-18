@@ -7,11 +7,12 @@ RSpec.describe "Articles", type: :request do
     subject { get(api_v1_articles_path) }
 
     context "公開済みの記事がある時" do
-      let!(:article1) { create(:article, updated_at: 1.day.ago, status: "publish") }
-      let!(:article2) { create(:article, updated_at: 2.days.ago, status: "publish") }
-      let!(:article3) { create(:article, status: "publish") }
+      let!(:article1) { create(:article, updated_at: 1.day.ago) }
+      let!(:article2) { create(:article, updated_at: 2.days.ago) }
+      let!(:article3) { create(:article) }
+      let!(:article4) { create(:article, :draft_status) }
 
-      it "一覧を全て取得できる(更新順)" do
+      it "公開済みの一覧のみ取得できる(更新順)" do
         subject
         res = JSON.parse(response.body)
         expect(res.length).to eq 3
@@ -20,22 +21,12 @@ RSpec.describe "Articles", type: :request do
         expect(response).to have_http_status(200)
       end
     end
-
-    context "下書きの記事がある時" do
-      let(:article) { create(:article, status: "draft") }
-
-      it "下書きの一覧は、取得できない" do
-        subject
-        res = JSON.parse(response.body)
-        expect(res).to be_empty
-      end
-    end
   end
 
   describe "GET /articles/:id" do
     subject { get(api_v1_article_path(article_id)) }
     context "公開済みで、存在する記事の詳細を指定した時" do
-      let(:article) { create(:article, status: "publish") }
+      let(:article) { create(:article) }
       let(:article_id) { article.id }
 
       it "記事が表示される" do
@@ -55,7 +46,7 @@ RSpec.describe "Articles", type: :request do
       end
     end
     context "下書きの記事の詳細を指定した時" do
-      let(:article) { create(:article, status: "draft") }
+      let(:article) { create(:article, :draft_status) }
       let(:article_id) { article.id }
 
       it "記事が表示されない" do
