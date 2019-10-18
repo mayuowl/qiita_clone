@@ -21,7 +21,6 @@ FactoryBot.define do
 
     trait :draft_status do
       status { :draft }
-      user
     end
   end
 end
