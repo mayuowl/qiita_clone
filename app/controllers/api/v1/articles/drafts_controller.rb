@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class Api::V1::Articles::DraftsController < ApplicationController
+class Api::V1::Articles::DraftsController < Api::V1::Articles::ApiController
+  before_action :authenticate_user!, only: [:index, :show]
+
   def index
     articles = Article.draft.order(updated_at: :desc)
     render json: articles
