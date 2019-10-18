@@ -17,14 +17,14 @@ require "rails_helper"
 RSpec.describe Article, type: :model do
   describe "正常系" do
     context "タイトルと本文が入力されている時" do
-      let(:article) { create(:article) }
+      let(:article) { create(:article, :draft_status) }
       it "登録出来る(ステータスは下書き)" do
         expect(article).to be_valid
         expect(article.status).to eq "draft"
       end
     end
     context "公開記事を作成する時" do
-      let(:article) { create(:article, status: "publish") }
+      let(:article) { create(:article, :publish_status) }
       it "作成できる" do
         expect(article).to be_valid
         expect(article.status).to eq "publish"

@@ -16,6 +16,14 @@ FactoryBot.define do
   factory :article do
     title { Faker::Book.title }
     body { Faker::TvShows::Friends.quote }
+    status { :draft }
     user
+
+    trait :draft_status do
+      status { :draft }
+    end
+    trait :publish_status do
+      status { :publish }
+    end
   end
 end

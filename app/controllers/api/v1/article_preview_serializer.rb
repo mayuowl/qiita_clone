@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 class Api::V1::ArticlePreviewSerializer < ActiveModel::Serializer
-  attributes :id, :title, :updated_at
+  attributes :id, :title, :updated_at, :status
   belongs_to :user
 end
