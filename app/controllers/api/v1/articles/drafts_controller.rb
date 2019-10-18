@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::Articles::DraftsController < Api::V1::Articles::ApiController
-  before_action :authenticate_user!, only: [:index, :show]
+  before_action :authenticate_user!, only: %i[index show]
 
   def index
     articles = Article.draft.order(updated_at: :desc)
