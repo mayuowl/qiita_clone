@@ -14,9 +14,9 @@ RSpec.describe "Api::V1::Articles::Drafs", type: :request do
       it "記事一覧を取得できる" do
         subject
         res = JSON.parse(response.body)
-        expect(res[0]["title"]).to eq article.title
-        expect(res[0]["body"]).to eq article.body
-        expect(res[0]["user_id"]).to eq article.user_id
+        expect(res[0]["user"]["id"]).to eq current_user.id
+        expect(res[0]["user"]["account"]).to eq current_user.account
+        expect(res[0]["user"]["email"]).to eq current_user.email
         expect(response).to have_http_status(200)
       end
     end
@@ -35,7 +35,7 @@ RSpec.describe "Api::V1::Articles::Drafs", type: :request do
         res = JSON.parse(response.body)
         expect(res["title"]).to eq article.title
         expect(res["body"]).to eq article.body
-        expect(res["user_id"]).to eq article.user_id
+        expect(res["user"]["id"]).to eq article.user_id
         expect(response).to have_http_status(200)
       end
     end
