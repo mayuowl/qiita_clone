@@ -11,7 +11,7 @@ class Api::V1::ArticlesController < Api::V1::ApiController
 
   def show
     article = Article.publish.find(params[:id])
-    render json: article
+    render json: article, serializer: Api::V1::ArticleSerializer
   end
 
   def create

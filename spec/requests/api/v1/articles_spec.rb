@@ -34,7 +34,7 @@ RSpec.describe "Articles", type: :request do
         res = JSON.parse(response.body)
         expect(res["title"]).to eq article.title
         expect(res["body"]).to eq article.body
-        expect(res["user_id"]).to eq article.user_id
+        expect(res["user"]["id"]).to eq article.user_id
         expect(response).to have_http_status(200)
       end
     end
