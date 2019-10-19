@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+
   root "homes#index"
 
   # reload 対策
@@ -16,6 +17,9 @@ Rails.application.routes.draw do
       }
       namespace :articles do
         resources :drafts, only: %i[index show]
+      end
+      namespace :current do
+        resources :articles, only: [:index]
       end
       resources :articles
     end
