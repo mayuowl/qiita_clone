@@ -10,7 +10,7 @@ RSpec.describe "Api::V1::Current::Articles", type: :request do
       let(:headers) { authentication_headers_for(current_user) }
       let(:current_user) { create(:user) }
       let!(:article1) { create(:article, :publish_status, user: current_user, updated_at: 1.day.ago) }
-      let!(:article2) { create(:article, :publish_status, user: current_user, updated_at: 2.day.ago) }
+      let!(:article2) { create(:article, :publish_status, user: current_user, updated_at: 2.days.ago) }
       let!(:article3) { create(:article, :publish_status, user: current_user) }
       let!(:article4) { create(:article, :draft_status, user: current_user) }
 
