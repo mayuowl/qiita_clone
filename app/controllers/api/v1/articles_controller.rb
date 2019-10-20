@@ -5,12 +5,12 @@ class Api::V1::ArticlesController < Api::V1::ApiController
   before_action :set_article, only: %i[update destroy]
 
   def index
-    articles = Article.publish.order(updated_at: :desc)
+    articles = Article.published.order(updated_at: :desc)
     render json: articles, each_serializer: Api::V1::ArticlePreviewSerializer
   end
 
   def show
-    article = Article.publish.find(params[:id])
+    article = Article.published.find(params[:id])
     render json: article, serializer: Api::V1::ArticleSerializer
   end
 

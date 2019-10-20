@@ -24,10 +24,10 @@ RSpec.describe Article, type: :model do
       end
     end
     context "公開記事を作成する時" do
-      let(:article) { create(:article, :publish_status) }
+      let(:article) { create(:article, :published_status) }
       it "作成できる" do
         expect(article).to be_valid
-        expect(article.status).to eq "publish"
+        expect(article.status).to eq "published"
       end
     end
   end
