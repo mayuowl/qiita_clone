@@ -80,12 +80,12 @@ export default class ArticlesContainer extends Vue {
   async createArticle(status: string): Promise<void> {
     enum Statuses {
       "draft" = "draft",
-      "published" = "publish"
+      "publish" = "publish"
     }
     const params = {
       title: this.title,
       body: this.body,
-      status: "Statuses[status]"
+      status: Statuses[status]
     };
 
     await axios
