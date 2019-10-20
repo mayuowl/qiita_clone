@@ -15,12 +15,12 @@
     </div>
     <div class="text-xs-right">
       <v-btn
-        @click="createArticle('published')"
+        @click="createArticle('publish')"
         color="#55c500"
         class="font-weight-bold white--text"
       >Qiitaに投稿</v-btn>
       <v-btn
-        @click="createArticle('drafttt')"
+        @click="createArticle('draft')"
         color="#55c500"
         class="font-weight-bold white--text"
       >下書き投稿</v-btn>
