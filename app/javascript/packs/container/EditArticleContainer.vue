@@ -15,7 +15,7 @@
     </div>
     <div class="text-xs-right">
       <v-btn
-        @click="createArticle('publish')"
+        @click="createArticle('published')"
         color="#55c500"
         class="font-weight-bold white--text"
       >Qiitaに投稿</v-btn>
@@ -80,7 +80,7 @@ export default class ArticlesContainer extends Vue {
   async createArticle(status: string): Promise<void> {
     enum Statuses {
       "draft" = "draft",
-      "publish" = "publish"
+      "published" = "published"
     }
     const params = {
       title: this.title,

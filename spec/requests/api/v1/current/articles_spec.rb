@@ -9,9 +9,9 @@ RSpec.describe "Api::V1::Current::Articles", type: :request do
     context "マイページにアクセスした時" do
       let(:headers) { authentication_headers_for(current_user) }
       let(:current_user) { create(:user) }
-      let!(:article1) { create(:article, :publish_status, user: current_user, updated_at: 1.day.ago) }
-      let!(:article2) { create(:article, :publish_status, user: current_user, updated_at: 2.days.ago) }
-      let!(:article3) { create(:article, :publish_status, user: current_user) }
+      let!(:article1) { create(:article, :published_status, user: current_user, updated_at: 1.day.ago) }
+      let!(:article2) { create(:article, :published_status, user: current_user, updated_at: 2.days.ago) }
+      let!(:article3) { create(:article, :published_status, user: current_user) }
       let!(:article4) { create(:article, :draft_status, user: current_user) }
 
       it "自分の記事一覧（公開のみ、更新順）を取得できる" do

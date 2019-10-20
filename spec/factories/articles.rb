@@ -22,8 +22,8 @@ FactoryBot.define do
     trait :draft_status do
       status { :draft }
     end
-    trait :publish_status do
-      status { :publish }
+    trait :published_status do
+      status { :published }
     end
   end
 end
