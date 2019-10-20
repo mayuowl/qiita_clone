@@ -9,15 +9,18 @@ RSpec.describe "Api::V1::Current::Articles", type: :request do
     context "マイページにアクセスした時" do
       let(:headers) { authentication_headers_for(current_user) }
       let(:current_user) { create(:user) }
-      let!(:article1) { create(:article, :publish_status, user: current_user) }
-      let!(:article2) { create(:article, :draft_status, user: current_user) }
+      let!(:article1) { create(:article, :publish_status, user: current_user, updated_at: 1.day.ago) }
+      let!(:article2) { create(:article, :publish_status, user: current_user, updated_at: 2.day.ago) }
+      let!(:article3) { create(:article, :publish_status, user: current_user) }
+      let!(:article4) { create(:article, :draft_status, user: current_user) }
 
-      it "自分の記事一覧（公開のみ）を取得できる" do
+      it "自分の記事一覧（公開のみ、更新順）を取得できる" do
         subject
         res = JSON.parse(response.body)
         aggregate_failures "testing response" do
-          expect(res.length).to eq 1
-          expect(res[0]["title"]).to eq article1.title
+          expect(res.length).to eq 3
+          expect(res.map { |d| d["id"] }).to eq [article3.id, article1.id, article2.id]
+          expect(res[0]["title"]).to eq article3.title
           expect(res[0]["user"]["id"]).to eq current_user.id
           expect(res[0]["user"]["account"]).to eq current_user.account
           expect(res[0]["user"]["email"]).to eq current_user.email
