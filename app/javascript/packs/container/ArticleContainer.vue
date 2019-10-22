@@ -102,7 +102,7 @@ export default class ArticleContainer extends Vue {
   moveToEditArticlePage(id: string): void {
     Router.push(`/articles/${id}/edit`);
   }
-    async confirmDeleteArticle(): Promise<void> {
+  async confirmDeleteArticle(): Promise<void> {
     const result = confirm("この記事を削除してもよろしいですか？")
     if (result) {
       await axios
