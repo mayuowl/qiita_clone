@@ -34,7 +34,6 @@ import { Vue, Component } from "vue-property-decorator";
 import Router from "../router/router";
 import marked from "marked";
 import hljs from "highlight.js";
-
 const headers = {
   headers: {
     Authorization: "Bearer",
@@ -45,18 +44,15 @@ const headers = {
   }
 };
 @Component
-export default class ArticlesContainer extends Vue {
+export default class EditDraftArticleContainer extends Vue {
   id: string = "";
   title: string = "";
   body: string = "";
-
   async mounted(): Promise<void> {
-    // only update
     if (this.$route.params.id) {
       await this.fetchArticle(this.$route.params.id);
     }
   }
-
   async created(): Promise<void> {
     const renderer = new marked.Renderer();
     let data = "";
@@ -67,10 +63,8 @@ export default class ArticlesContainer extends Vue {
       } catch (e) {
         data = hljs.highlightAuto(code).value;
       }
-
       return `<pre><code class="hljs"> ${data} </code></pre>`;
     };
-
     marked.setOptions({
       renderer: renderer,
       tables: true,
@@ -78,16 +72,14 @@ export default class ArticlesContainer extends Vue {
       langPrefix: ""
     });
   }
-
   get compiledMarkdown() {
     return function(text: string) {
       return marked(text);
     };
   }
-
   async fetchArticle(id: string): Promise<void> {
     await axios
-      .get(`/api/v1/articles/${id}`)
+      .get(`/api/v1/articles/drafts/${id}`, headers)
       .then(response => {
         this.id = response.data.id;
         this.title = response.data.title;
@@ -98,7 +90,6 @@ export default class ArticlesContainer extends Vue {
         alert(e.response.statusText);
       });
   }
-
   async createOrUpdateArticle(status: string): Promise<void> {
     enum Statuses {
       "draft" = "draft",
