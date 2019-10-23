@@ -9,8 +9,8 @@ RSpec.describe "Api::V1::Current::Articles", type: :request do
     context "マイページにアクセスした時" do
       let(:headers) { authentication_headers_for(current_user) }
       let(:current_user) { create(:user) }
-      let!(:article1) { create(:article, :published_status, user: current_user, updated_at: 1.day.ago) }
-      let!(:article2) { create(:article, :published_status, user: current_user, updated_at: 2.days.ago) }
+      let!(:article1) { create(:article, :published_status, user: current_user, created_at: 10.days.ago, updated_at: 1.day.ago) }
+      let!(:article2) { create(:article, :published_status, user: current_user, created_at: 3.days.ago, updated_at: 2.days.ago) }
       let!(:article3) { create(:article, :published_status, user: current_user) }
       let!(:article4) { create(:article, :draft_status, user: current_user) }
 
@@ -19,7 +19,7 @@ RSpec.describe "Api::V1::Current::Articles", type: :request do
         res = JSON.parse(response.body)
         aggregate_failures "testing response" do
           expect(res.length).to eq 3
-          expect(res.map { |d| d["id"] }).to eq [article3.id, article1.id, article2.id]
+          expect(res.map { |d| d["id"] }).to eq [article3.id, article2.id, article1.id]
           expect(res[0]["title"]).to eq article3.title
           expect(res[0]["user"]["id"]).to eq current_user.id
           expect(res[0]["user"]["account"]).to eq current_user.account
