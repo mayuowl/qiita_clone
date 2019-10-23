@@ -13,7 +13,7 @@
               <a @click="moveToEditPage(article.id)">{{ article.title }}</a>
             </v-list-tile-title>
             <v-list-tile-sub-title>
-              by {{ article.user.name }}
+              by {{ article.user.account }}
               <time-ago
                 :refresh="60"
                 :datetime="article.updated_at"
