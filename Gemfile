@@ -6,7 +6,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "2.5.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "mysql2"
 gem "rails", "~> 5.2.3"
 # Use Puma as the app server
 gem "puma", "~> 3.11"
@@ -46,6 +45,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "factory_bot_rails"
   gem "faker"
+  gem "mysql2", ">= 0.4.4", "< 0.6.0"
   gem "pry-byebug"
   gem "pry-doc"
   gem "pry-rails"
@@ -72,6 +72,10 @@ group :test do
   gem "selenium-webdriver"
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem "chromedriver-helper"
+end
+
+group :production do
+  gem "pg"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
