@@ -8,7 +8,7 @@ Qiita clone
 [Take off Rails](https://freelance.cat-algorithm.com/) の課題で作成した、Qiita のクローンアプリです。
 
 - Ruby version 2.5.1
-- 
+- vue version 2.6.10
 
 ## Description
 Qiita の機能の一部を真似て作成しました。
