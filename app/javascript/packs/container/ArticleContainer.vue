@@ -15,8 +15,16 @@
       >
         <v-icon dark>edit</v-icon>
       </v-btn>
-      <v-btn fab flat dark small color="#55c500" @click="confirmDeleteArticle">
-        <v-icon dark>fas fa-trash-alt</v-icon>
+      <v-btn
+        fab
+        flat
+        dark
+        small
+        color="#55c500"
+        @click="confirmDeleteArticle"
+        v-if="deletable"
+      >
+        <v-icon dark>delete</v-icon>
       </v-btn>
     </v-layout>
     <v-layout>
@@ -85,6 +93,10 @@ export default class ArticleContainer extends Vue {
   }
 
   get editable(): boolean {
+    return localStorage.getItem("uid") === this.article.user.email;
+  }
+
+  get deletable(): boolean {
     return localStorage.getItem("uid") === this.article.user.email;
   }
 
