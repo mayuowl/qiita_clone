@@ -24,7 +24,7 @@
         @click="confirmDeleteArticle"
         v-if="deletable"
       >
-        <v-icon dark>fas fa-trash-alt</v-icon>
+        <v-icon dark>delete</v-icon>
       </v-btn>
     </v-layout>
     <v-layout>
