@@ -39,7 +39,7 @@ RSpec.describe "Articles", type: :request do
       end
     end
     context "存在しない記事の詳細を指定した時" do
-      let(:article_id) { 10_000 }
+      let(:article_id) { 10000 }
 
       it "記事が表示されない" do
         expect { subject }.to raise_error ActiveRecord::RecordNotFound
