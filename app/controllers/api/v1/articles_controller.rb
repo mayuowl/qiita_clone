@@ -30,11 +30,11 @@ class Api::V1::ArticlesController < Api::V1::ApiController
 
   private
 
-    def article_params
-      params.require(:article).permit(:title, :body, :status)
-    end
+  def article_params
+    params.require(:article).permit(:title, :body, :status)
+  end
 
-    def set_article
-      @article = current_user.articles.find(params[:id])
-    end
+  def set_article
+    @article = current_user.articles.find(params[:id])
+  end
 end
